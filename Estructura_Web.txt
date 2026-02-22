@@ -1,0 +1,31 @@
+b-aura/
+│
+├── app/
+│   ├── layout.tsx          # Layout general con Header y Footer
+│   ├── page.tsx            # Página de inicio
+│   ├── servicios/
+│   │   └── page.tsx
+│   ├── contacto/
+│   │   └── page.tsx
+│   ├── blog/
+│   │   ├── page.tsx        # Listado de posts
+│   │   └── [slug]/page.tsx # Página de cada post
+│
+├── components/
+│   ├── Header.tsx
+│   ├── Footer.tsx
+│   ├── BlogCard.tsx
+│   └── SEO.tsx
+│
+├── lib/
+│   └── wordpress.ts         # Funciones para conectar con WP REST API
+│
+├── public/
+│   └── images/              # Imágenes estáticas
+│
+├── styles/
+│   └── global.css           # Estilos generales (puede ser CSS normal)
+│
+├── next.config.js
+├── package.json
+└── tsconfig.json

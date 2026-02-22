@@ -29,3 +29,9 @@ b-aura/
 ├── next.config.js
 ├── package.json
 └── tsconfig.json
+
+pruebas locales: npm run dev
+
+Construir web local:
+npm run build
+npm run export

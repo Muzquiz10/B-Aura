@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // genera HTML estático
-}
+  output: 'export',
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

@@ -1,0 +1,12 @@
+{
+  "name": "b-aura-static-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "optimize:images": "node tools/optimize-images.mjs",
+    "serve": "node tools/serve-static.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
+  }
+}

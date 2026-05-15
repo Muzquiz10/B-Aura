@@ -23,7 +23,7 @@ const sitePath = (absolutePath) => `/${toPosix(path.relative(root, absolutePath)
 
 async function listTopLevelPageDirs(baseDir) {
   const entries = await fs.readdir(baseDir, { withFileTypes: true });
-  const ignored = new Set([".git", "assets", "node_modules", "tools", "wp-content", "wp-includes"]);
+  const ignored = new Set([".git", "assets", "node_modules", "tools", "trush", "wp-content", "wp-includes"]);
 
   return entries
     .filter((entry) => entry.isDirectory() && !ignored.has(entry.name))
@@ -31,6 +31,11 @@ async function listTopLevelPageDirs(baseDir) {
 }
 
 async function walkFiles(dir, predicate) {
+  const stat = await fs.stat(dir).catch(() => null);
+  if (!stat?.isDirectory()) {
+    return [];
+  }
+
   const entries = await fs.readdir(dir, { withFileTypes: true });
   const files = [];
 
@@ -71,22 +76,57 @@ async function uniqueAssetPath(baseDir, category, fileName, usedPaths) {
 }
 
 async function convertPngs() {
-  const pngFiles = await walkFiles(uploadsDir, (filePath) => filePath.toLowerCase().endsWith(".png"));
+  const uploadPngFiles = await walkFiles(uploadsDir, (filePath) => filePath.toLowerCase().endsWith(".png"));
+  const organizedPngFiles = await walkFiles(originalsDir, (filePath) => filePath.toLowerCase().endsWith(".png"));
   const usedOriginalPaths = new Set();
   const usedOptimizedPaths = new Set();
+  const jobs = new Map();
   const manifest = [];
   const htmlReplacements = new Map();
 
-  for (const sourcePath of pngFiles.sort()) {
+  for (const sourcePath of uploadPngFiles.sort()) {
     const category = categoryFor(sourcePath);
     const fileName = path.basename(sourcePath);
     const originalCopyPath = await uniqueAssetPath(originalsDir, category, fileName, usedOriginalPaths);
     const optimizedFileName = `${path.parse(originalCopyPath).name}.webp`;
     const optimizedPath = await uniqueAssetPath(optimizedDir, category, optimizedFileName, usedOptimizedPaths);
 
+    jobs.set(originalCopyPath, {
+      sourcePath,
+      originalCopyPath,
+      optimizedPath,
+      copySource: true,
+    });
+  }
+
+  for (const sourcePath of organizedPngFiles.sort()) {
+    if (jobs.has(sourcePath)) {
+      continue;
+    }
+
+    usedOriginalPaths.add(sourcePath);
+    const category = path.basename(path.dirname(sourcePath));
+    const optimizedFileName = `${path.parse(sourcePath).name}.webp`;
+    const optimizedPath = await uniqueAssetPath(optimizedDir, category, optimizedFileName, usedOptimizedPaths);
+
+    jobs.set(sourcePath, {
+      sourcePath,
+      originalCopyPath: sourcePath,
+      optimizedPath,
+      copySource: false,
+    });
+  }
+
+  for (const job of [...jobs.values()].sort((a, b) => a.sourcePath.localeCompare(b.sourcePath))) {
+    const { sourcePath, originalCopyPath, optimizedPath, copySource } = job;
+    const category = path.basename(path.dirname(originalCopyPath));
+
     await fs.mkdir(path.dirname(originalCopyPath), { recursive: true });
     await fs.mkdir(path.dirname(optimizedPath), { recursive: true });
-    await fs.copyFile(sourcePath, originalCopyPath);
+
+    if (copySource) {
+      await fs.copyFile(sourcePath, originalCopyPath);
+    }
 
     const metadata = await sharp(sourcePath).metadata();
     const sourceStats = await fs.stat(sourcePath);
@@ -104,6 +144,7 @@ async function convertPngs() {
     const optimizedUrl = sitePath(optimizedPath);
 
     htmlReplacements.set(sourceUrl, optimizedUrl);
+    htmlReplacements.set(sitePath(originalCopyPath), optimizedUrl);
 
     manifest.push({
       source: sourceUrl,

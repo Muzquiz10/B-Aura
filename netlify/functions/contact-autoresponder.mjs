@@ -1,9 +1,10 @@
 const CONTACT_FORM_NAME = "contacto";
-const EMAIL_TEMPLATE = "contact-confirmation";
-const DEFAULT_FROM_EMAIL = "contacto@b-aura.es";
+const RESEND_API_URL = "https://api.resend.com/emails";
+const DEFAULT_FROM_EMAIL = "B Aura <contacto@b-aura.es>";
+const DEFAULT_REPLY_TO = "contacto@b-aura.es";
 
 function hasEmailSettings() {
-	return Boolean(process.env.NETLIFY_EMAILS_SECRET);
+	return Boolean(process.env.RESEND_API_KEY);
 }
 
 function getRecipientEmail(data) {
@@ -16,6 +17,55 @@ function getFirstName(data) {
 	return name || "gracias";
 }
 
+function escapeHtml(value) {
+	return String(value)
+		.replaceAll("&", "&amp;")
+		.replaceAll("<", "&lt;")
+		.replaceAll(">", "&gt;")
+		.replaceAll('"', "&quot;");
+}
+
+function buildConfirmationHtml(name) {
+	const escapedName = escapeHtml(name);
+
+	return `<!DOCTYPE html>
+<html lang="es">
+<body style="margin:0; padding:0; background:#f7fbf6; font-family:Arial, Helvetica, sans-serif; color:#2d3430;">
+	<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f7fbf6; padding:28px 16px;">
+		<tr>
+			<td align="center">
+				<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px; background:#ffffff; border:1px solid #e2eadf; border-radius:8px;">
+					<tr>
+						<td style="padding:32px 28px 26px;">
+							<p style="margin:0 0 20px; color:#71c176; font-size:14px; font-weight:bold; letter-spacing:0.04em; text-transform:uppercase;">B Aura</p>
+							<h1 style="margin:0 0 18px; font-family:Georgia, 'Times New Roman', serif; font-size:30px; line-height:1.2; font-weight:400; color:#2d3430;">Hemos recibido tu mensaje</h1>
+							<p style="margin:0 0 16px; font-size:16px; line-height:1.6;">Hola ${escapedName},</p>
+							<p style="margin:0 0 16px; font-size:16px; line-height:1.6;">Gracias por contactar con B Aura. Hemos recibido correctamente tu mensaje y te responderemos lo antes posible.</p>
+							<p style="margin:0 0 24px; font-size:16px; line-height:1.6;">Si necesitas aportar algun detalle adicional, puedes responder a este correo o escribirnos a contacto@b-aura.es.</p>
+							<p style="margin:0; font-size:16px; line-height:1.6;">Un saludo,<br>Equipo B Aura</p>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>`;
+}
+
+function buildConfirmationText(name) {
+	return [
+		`Hola ${name},`,
+		"",
+		"Gracias por contactar con B Aura. Hemos recibido correctamente tu mensaje y te responderemos lo antes posible.",
+		"",
+		"Si necesitas aportar algun detalle adicional, puedes responder a este correo o escribirnos a contacto@b-aura.es.",
+		"",
+		"Un saludo,",
+		"Equipo B Aura",
+	].join("\n");
+}
+
 async function sendConfirmationEmail(data) {
 	const to = getRecipientEmail(data);
 	if (!to) {
@@ -24,36 +74,31 @@ async function sendConfirmationEmail(data) {
 	}
 
 	if (!hasEmailSettings()) {
-		console.warn("Contact autoresponder skipped: NETLIFY_EMAILS_SECRET is not configured.");
+		console.warn("Contact autoresponder skipped: RESEND_API_KEY is not configured.");
 		return;
 	}
 
-	const siteUrl = process.env.URL || process.env.DEPLOY_PRIME_URL;
-	if (!siteUrl) {
-		console.warn("Contact autoresponder skipped: site URL is not available.");
-		return;
-	}
+	const name = getFirstName(data);
 
-	const response = await fetch(`${siteUrl}/.netlify/functions/emails/${EMAIL_TEMPLATE}`, {
+	const response = await fetch(RESEND_API_URL, {
 		method: "POST",
 		headers: {
+			authorization: `Bearer ${process.env.RESEND_API_KEY}`,
 			"content-type": "application/json",
-			"netlify-emails-secret": process.env.NETLIFY_EMAILS_SECRET,
 		},
 		body: JSON.stringify({
 			from: process.env.CONTACT_AUTOREPLY_FROM || DEFAULT_FROM_EMAIL,
-			to,
+			to: [to],
 			subject: "Hemos recibido tu mensaje - B Aura",
-			parameters: {
-				name: getFirstName(data),
-				email: to,
-			},
+			html: buildConfirmationHtml(name),
+			text: buildConfirmationText(name),
+			reply_to: process.env.CONTACT_REPLY_TO || DEFAULT_REPLY_TO,
 		}),
 	});
 
 	if (!response.ok) {
 		const details = await response.text();
-		throw new Error(`Contact autoresponder failed with ${response.status}: ${details}`);
+		throw new Error(`Resend autoresponder failed with ${response.status}: ${details}`);
 	}
 }
 

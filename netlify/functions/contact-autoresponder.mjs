@@ -1,6 +1,7 @@
 const CONTACT_FORM_NAME = "contacto";
 const RESEND_API_URL = "https://api.resend.com/emails";
 const CONTACT_EMAIL = "contacto@b-aura.es";
+const REPLY_TO_EMAIL = "mariana03011991@gmail.com";
 const DEFAULT_FROM_EMAIL = `B Aura <${CONTACT_EMAIL}>`;
 
 function hasEmailSettings() {
@@ -41,7 +42,7 @@ function buildConfirmationHtml(name) {
 							<h1 style="margin:0 0 18px; font-family:Georgia, 'Times New Roman', serif; font-size:30px; line-height:1.2; font-weight:400; color:#2d3430;">Hemos recibido tu mensaje</h1>
 							<p style="margin:0 0 16px; font-size:16px; line-height:1.6;">Hola ${escapedName},</p>
 							<p style="margin:0 0 16px; font-size:16px; line-height:1.6;">Gracias por contactar con B Aura. Hemos recibido correctamente tu mensaje y te responderemos lo antes posible.</p>
-							<p style="margin:0 0 24px; font-size:16px; line-height:1.6;">Si necesitas aportar algun detalle adicional, puedes responder a este correo o escribirnos a contacto@b-aura.es.</p>
+							<p style="margin:0 0 24px; font-size:16px; line-height:1.6;">Si necesitas aportar algun detalle adicional, puedes escribirnos a ${REPLY_TO_EMAIL}.</p>
 							<p style="margin:0; font-size:16px; line-height:1.6;">Un saludo,<br>Equipo B Aura</p>
 						</td>
 					</tr>
@@ -59,7 +60,7 @@ function buildConfirmationText(name) {
 		"",
 		"Gracias por contactar con B Aura. Hemos recibido correctamente tu mensaje y te responderemos lo antes posible.",
 		"",
-		"Si necesitas aportar algun detalle adicional, puedes responder a este correo o escribirnos a contacto@b-aura.es.",
+		`Si necesitas aportar algun detalle adicional, puedes escribirnos a ${REPLY_TO_EMAIL}.`,
 		"",
 		"Un saludo,",
 		"Equipo B Aura",
@@ -92,7 +93,7 @@ async function sendConfirmationEmail(data) {
 			subject: "Hemos recibido tu mensaje - B Aura",
 			html: buildConfirmationHtml(name),
 			text: buildConfirmationText(name),
-			reply_to: CONTACT_EMAIL,
+			reply_to: REPLY_TO_EMAIL,
 		}),
 	});
 

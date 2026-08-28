@@ -1,7 +1,7 @@
 const CONTACT_FORM_NAME = "contacto";
 const RESEND_API_URL = "https://api.resend.com/emails";
-const DEFAULT_FROM_EMAIL = "B Aura <contacto@b-aura.es>";
-const DEFAULT_REPLY_TO = "contacto@b-aura.es";
+const CONTACT_EMAIL = "contacto@b-aura.es";
+const DEFAULT_FROM_EMAIL = `B Aura <${CONTACT_EMAIL}>`;
 
 function hasEmailSettings() {
 	return Boolean(process.env.RESEND_API_KEY);
@@ -87,12 +87,12 @@ async function sendConfirmationEmail(data) {
 			"content-type": "application/json",
 		},
 		body: JSON.stringify({
-			from: process.env.CONTACT_AUTOREPLY_FROM || DEFAULT_FROM_EMAIL,
+			from: DEFAULT_FROM_EMAIL,
 			to: [to],
 			subject: "Hemos recibido tu mensaje - B Aura",
 			html: buildConfirmationHtml(name),
 			text: buildConfirmationText(name),
-			reply_to: process.env.CONTACT_REPLY_TO || DEFAULT_REPLY_TO,
+			reply_to: CONTACT_EMAIL,
 		}),
 	});
 

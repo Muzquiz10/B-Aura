@@ -69,8 +69,8 @@ Tambien hay una respuesta automatica preparada con Resend:
 2. Crea una API key en Resend.
 3. En Netlify, ve a `Project configuration > Environment variables`.
 4. Crea `RESEND_API_KEY` con la API key de Resend.
-5. Opcionalmente crea `CONTACT_AUTOREPLY_FROM` con `B Aura <contacto@b-aura.es>`.
-6. Opcionalmente crea `CONTACT_REPLY_TO` con `contacto@b-aura.es`.
-7. Redepliega el sitio y envia una prueba desde `/contacto/`.
+5. Redepliega el sitio y envia una prueba desde `/contacto/`.
 
 No hace falta usar `Project configuration > Emails > Configuration` de Netlify para esta autorespuesta.
+
+No crees variables `CONTACT_AUTOREPLY_FROM` ni `CONTACT_REPLY_TO`: el remitente ya esta definido en la funcion. Si existen en Netlify y estan marcadas como secretas, puedes borrarlas.

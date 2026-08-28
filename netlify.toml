@@ -2,6 +2,9 @@
   command = "npm run optimize:images"
   publish = "."
 
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "CONTACT_AUTOREPLY_FROM,CONTACT_REPLY_TO"
+
 [[headers]]
   for = "/assets/*"
   [headers.values]

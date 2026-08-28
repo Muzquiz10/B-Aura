@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Mensaje recibido - B Aura</title>
+	<meta name="robots" content="noindex, follow">
+	<link rel="icon" href="/wp-content/uploads/2025/06/cropped-bauras-1-60x60.jpg" sizes="32x32">
+	<link rel="icon" href="/wp-content/uploads/2025/06/cropped-bauras-1-300x300.jpg" sizes="192x192">
+	<style>
+		:root {
+			--brand-green: #71c176;
+			--brand-rose: #f2295b;
+			--text: #2d3430;
+			--muted: #66736b;
+			--surface: #ffffff;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			min-height: 100vh;
+			color: var(--text);
+			background:
+				linear-gradient(135deg, rgba(113, 193, 118, 0.15), rgba(242, 41, 91, 0.12)),
+				#f8fbf7;
+			font-family: Arial, Helvetica, sans-serif;
+			line-height: 1.6;
+		}
+
+		main {
+			display: grid;
+			min-height: 100vh;
+			place-items: center;
+			padding: 32px 20px;
+		}
+
+		.confirmation {
+			width: min(100%, 680px);
+			padding: clamp(32px, 7vw, 64px);
+			background: var(--surface);
+			border: 1px solid rgba(45, 52, 48, 0.08);
+			border-radius: 8px;
+			box-shadow: 0 24px 70px rgba(45, 52, 48, 0.12);
+			text-align: center;
+		}
+
+		.logo {
+			width: min(190px, 65vw);
+			height: auto;
+			margin-bottom: 28px;
+		}
+
+		h1 {
+			margin: 0 0 18px;
+			font-family: Georgia, "Times New Roman", serif;
+			font-size: clamp(2.2rem, 8vw, 4rem);
+			font-weight: 400;
+			line-height: 1.1;
+		}
+
+		p {
+			margin: 0 auto 30px;
+			max-width: 34rem;
+			color: var(--muted);
+			font-size: 1.05rem;
+		}
+
+		.actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px;
+			justify-content: center;
+		}
+
+		a {
+			display: inline-flex;
+			min-height: 44px;
+			align-items: center;
+			justify-content: center;
+			padding: 10px 20px;
+			border-radius: 4px;
+			color: #152018;
+			background: var(--brand-green);
+			font-weight: 700;
+			text-decoration: none;
+		}
+
+		a.secondary {
+			background: transparent;
+			border: 1px solid rgba(45, 52, 48, 0.22);
+			color: var(--text);
+		}
+
+		a:focus-visible {
+			outline: 3px solid rgba(242, 41, 91, 0.45);
+			outline-offset: 3px;
+		}
+	</style>
+</head>
+<body>
+	<main>
+		<section class="confirmation" aria-labelledby="confirmation-title">
+			<img class="logo" src="/assets/images/optimized/brand/cropped-cropped-bauras_transparente-237x167.webp" alt="B Aura">
+			<h1 id="confirmation-title">Mensaje recibido</h1>
+			<p>Gracias por escribir. Te responderemos lo antes posible en el correo o WhatsApp que has indicado.</p>
+			<div class="actions">
+				<a href="/">Volver al inicio</a>
+				<a class="secondary" href="/contacto/">Enviar otro mensaje</a>
+			</div>
+		</section>
+	</main>
+</body>
+</html>

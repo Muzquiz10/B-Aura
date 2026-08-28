@@ -1,7 +1,6 @@
 {
   "name": "b-aura-static-site",
   "private": true,
-  "type": "module",
   "scripts": {
     "optimize:images": "node tools/optimize-images.mjs",
     "prune:wordpress": "node tools/prune-wordpress-static.mjs",

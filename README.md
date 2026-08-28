@@ -47,3 +47,26 @@ npm run serve
 ```
 
 Por defecto abre el sitio en `http://localhost:4173`.
+
+## Formulario de contacto
+
+El formulario de `contacto/index.html` esta adaptado para Netlify Forms. Para que Netlify lo recoja:
+
+1. Publica el sitio de nuevo en Netlify.
+2. En Netlify, comprueba que la deteccion de formularios esta activa en `Forms`.
+3. Tras el despliegue, envia una prueba desde `/contacto/`.
+4. Las entradas apareceran en `Forms`; para recibirlas por correo, crea una notificacion de formulario en `Project configuration > Notifications > Emails and webhooks`.
+
+### Avisos y respuesta automatica
+
+Netlify guarda las entradas en `Forms`. Para recibir una copia por correo, crea una notificacion de formulario y pon como destinatario el correo que quieras usar, por ejemplo `contacto@b-aura.es`.
+
+El formulario tiene un campo `email`, asi que las notificaciones de Netlify podran usarlo como `Reply-To` para responder directamente al cliente.
+
+Tambien hay una respuesta automatica preparada con Netlify Email Integration:
+
+1. En Netlify, ve a `Project configuration > Emails > Configuration`.
+2. Activa la extension de email y elige proveedor: SendGrid, Mailgun o Postmark.
+3. Configura las variables necesarias del proveedor y `NETLIFY_EMAILS_SECRET` con alcance para Builds y Functions.
+4. Opcionalmente define `CONTACT_AUTOREPLY_FROM`; si no, se usara `contacto@b-aura.es`.
+5. Redepliega el sitio y envia una prueba desde `/contacto/`.

@@ -42,7 +42,7 @@ function buildConfirmationHtml(name) {
 							<h1 style="margin:0 0 18px; font-family:Georgia, 'Times New Roman', serif; font-size:30px; line-height:1.2; font-weight:400; color:#2d3430;">Hemos recibido tu mensaje</h1>
 							<p style="margin:0 0 16px; font-size:16px; line-height:1.6;">Hola ${escapedName},</p>
 							<p style="margin:0 0 16px; font-size:16px; line-height:1.6;">Gracias por contactar con B Aura. Hemos recibido correctamente tu mensaje y te responderemos lo antes posible.</p>
-							<p style="margin:0 0 24px; font-size:16px; line-height:1.6;">Si necesitas aportar algun detalle adicional, puedes escribirnos a ${REPLY_TO_EMAIL}.</p>
+							<p style="margin:0 0 24px; font-size:16px; line-height:1.6;">Si necesitas aportar algún detalle adicional, puedes escribirnos a <a href="mailto:${REPLY_TO_EMAIL}" style="color:#71c176;">${REPLY_TO_EMAIL}</a>.</p>
 							<p style="margin:0; font-size:16px; line-height:1.6;">Un saludo,<br>Equipo B Aura</p>
 						</td>
 					</tr>
@@ -60,7 +60,7 @@ function buildConfirmationText(name) {
 		"",
 		"Gracias por contactar con B Aura. Hemos recibido correctamente tu mensaje y te responderemos lo antes posible.",
 		"",
-		`Si necesitas aportar algun detalle adicional, puedes escribirnos a ${REPLY_TO_EMAIL}.`,
+		`Si necesitas aportar algún detalle adicional, puedes escribirnos a ${REPLY_TO_EMAIL}.`,
 		"",
 		"Un saludo,",
 		"Equipo B Aura",

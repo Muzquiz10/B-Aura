@@ -18,13 +18,20 @@ function getFirstName(data) {
 	return name || "gracias";
 }
 
-function getLastName(data) {
-	return String(data.apellidos || "").trim();
-}
-
 function hasMarketingConsent(data) {
 	const consent = String(data.marketing_consent || "").trim().toLowerCase();
 	return ["1", "on", "true", "yes", "si", "sí"].includes(consent);
+}
+
+function getMarketingContact(data) {
+	const firstName = getFirstName(data);
+	const lastName = String(data.apellidos || "").trim();
+
+	return {
+		first_name: firstName === "gracias" ? undefined : firstName,
+		last_name: lastName || undefined,
+		unsubscribed: false,
+	};
 }
 
 function escapeHtml(value) {
@@ -112,16 +119,14 @@ async function sendConfirmationEmail(data) {
 	}
 }
 
-async function updateExistingMarketingContact(email) {
+async function updateExistingMarketingContact(email, contact) {
 	const response = await fetch(`${RESEND_API_BASE_URL}/contacts/${encodeURIComponent(email)}`, {
 		method: "PATCH",
 		headers: {
 			authorization: `Bearer ${process.env.RESEND_API_KEY}`,
 			"content-type": "application/json",
 		},
-		body: JSON.stringify({
-			unsubscribed: false,
-		}),
+		body: JSON.stringify(contact),
 	});
 
 	if (!response.ok) {
@@ -133,6 +138,7 @@ async function updateExistingMarketingContact(email) {
 async function addMarketingContactToSegment(email) {
 	const segmentId = String(process.env.RESEND_CONTACT_SEGMENT_ID || "").trim();
 	if (!segmentId) {
+		console.warn("Marketing contact saved without segment: RESEND_CONTACT_SEGMENT_ID is not configured.");
 		return;
 	}
 
@@ -169,15 +175,9 @@ async function saveMarketingContact(data) {
 		return;
 	}
 
-	const firstName = getFirstName(data);
-	const lastName = getLastName(data);
-	const segmentId = String(process.env.RESEND_CONTACT_SEGMENT_ID || "").trim();
 	const contact = {
 		email,
-		first_name: firstName === "gracias" ? undefined : firstName,
-		last_name: lastName || undefined,
-		unsubscribed: false,
-		segments: segmentId ? [{ id: segmentId }] : undefined,
+		...getMarketingContact(data),
 	};
 
 	const response = await fetch(`${RESEND_API_BASE_URL}/contacts`, {
@@ -190,12 +190,15 @@ async function saveMarketingContact(data) {
 	});
 
 	if (response.ok) {
+		await addMarketingContactToSegment(email);
+		console.log("Marketing contact saved in Resend.");
 		return;
 	}
 
 	if (response.status === 409) {
-		await updateExistingMarketingContact(email);
+		await updateExistingMarketingContact(email, getMarketingContact(data));
 		await addMarketingContactToSegment(email);
+		console.log("Existing marketing contact updated in Resend.");
 		return;
 	}
 

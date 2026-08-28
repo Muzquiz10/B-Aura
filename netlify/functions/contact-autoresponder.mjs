@@ -1,5 +1,5 @@
 const CONTACT_FORM_NAME = "contacto";
-const RESEND_API_URL = "https://api.resend.com/emails";
+const RESEND_API_BASE_URL = "https://api.resend.com";
 const CONTACT_EMAIL = "contacto@b-aura.es";
 const REPLY_TO_EMAIL = "mariana03011991@gmail.com";
 const DEFAULT_FROM_EMAIL = `B Aura <${CONTACT_EMAIL}>`;
@@ -16,6 +16,15 @@ function getRecipientEmail(data) {
 function getFirstName(data) {
 	const name = String(data.nombre || "").trim();
 	return name || "gracias";
+}
+
+function getLastName(data) {
+	return String(data.apellidos || "").trim();
+}
+
+function hasMarketingConsent(data) {
+	const consent = String(data.marketing_consent || "").trim().toLowerCase();
+	return ["1", "on", "true", "yes", "si", "sí"].includes(consent);
 }
 
 function escapeHtml(value) {
@@ -81,7 +90,7 @@ async function sendConfirmationEmail(data) {
 
 	const name = getFirstName(data);
 
-	const response = await fetch(RESEND_API_URL, {
+	const response = await fetch(`${RESEND_API_BASE_URL}/emails`, {
 		method: "POST",
 		headers: {
 			authorization: `Bearer ${process.env.RESEND_API_KEY}`,
@@ -103,6 +112,97 @@ async function sendConfirmationEmail(data) {
 	}
 }
 
+async function updateExistingMarketingContact(email) {
+	const response = await fetch(`${RESEND_API_BASE_URL}/contacts/${encodeURIComponent(email)}`, {
+		method: "PATCH",
+		headers: {
+			authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+			"content-type": "application/json",
+		},
+		body: JSON.stringify({
+			unsubscribed: false,
+		}),
+	});
+
+	if (!response.ok) {
+		const details = await response.text();
+		throw new Error(`Resend contact update failed with ${response.status}: ${details}`);
+	}
+}
+
+async function addMarketingContactToSegment(email) {
+	const segmentId = String(process.env.RESEND_CONTACT_SEGMENT_ID || "").trim();
+	if (!segmentId) {
+		return;
+	}
+
+	const response = await fetch(
+		`${RESEND_API_BASE_URL}/contacts/${encodeURIComponent(email)}/segments/${encodeURIComponent(segmentId)}`,
+		{
+			method: "POST",
+			headers: {
+				authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+				"content-type": "application/json",
+			},
+		},
+	);
+
+	if (!response.ok && response.status !== 409) {
+		const details = await response.text();
+		throw new Error(`Resend contact segment add failed with ${response.status}: ${details}`);
+	}
+}
+
+async function saveMarketingContact(data) {
+	if (!hasMarketingConsent(data)) {
+		return;
+	}
+
+	const email = getRecipientEmail(data);
+	if (!email) {
+		console.warn("Marketing contact skipped: missing or invalid email field.");
+		return;
+	}
+
+	if (!hasEmailSettings()) {
+		console.warn("Marketing contact skipped: RESEND_API_KEY is not configured.");
+		return;
+	}
+
+	const firstName = getFirstName(data);
+	const lastName = getLastName(data);
+	const segmentId = String(process.env.RESEND_CONTACT_SEGMENT_ID || "").trim();
+	const contact = {
+		email,
+		first_name: firstName === "gracias" ? undefined : firstName,
+		last_name: lastName || undefined,
+		unsubscribed: false,
+		segments: segmentId ? [{ id: segmentId }] : undefined,
+	};
+
+	const response = await fetch(`${RESEND_API_BASE_URL}/contacts`, {
+		method: "POST",
+		headers: {
+			authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+			"content-type": "application/json",
+		},
+		body: JSON.stringify(contact),
+	});
+
+	if (response.ok) {
+		return;
+	}
+
+	if (response.status === 409) {
+		await updateExistingMarketingContact(email);
+		await addMarketingContactToSegment(email);
+		return;
+	}
+
+	const details = await response.text();
+	throw new Error(`Resend contact create failed with ${response.status}: ${details}`);
+}
+
 export default {
 	async formSubmitted(event) {
 		const data = event.data || {};
@@ -112,6 +212,17 @@ export default {
 			return;
 		}
 
-		await sendConfirmationEmail(data);
+		const [emailResult, contactResult] = await Promise.allSettled([
+			sendConfirmationEmail(data),
+			saveMarketingContact(data),
+		]);
+
+		if (contactResult.status === "rejected") {
+			console.error(contactResult.reason);
+		}
+
+		if (emailResult.status === "rejected") {
+			throw emailResult.reason;
+		}
 	},
 };

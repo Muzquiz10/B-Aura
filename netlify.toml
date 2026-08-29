@@ -1,5 +1,5 @@
 [build]
-  command = "npm run optimize:images"
+  command = "npm run optimize:images && npm run analytics:setup && npm run seo:setup"
   publish = "."
 
 [build.environment]

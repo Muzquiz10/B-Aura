@@ -2,9 +2,11 @@
   "name": "b-aura-static-site",
   "private": true,
   "scripts": {
+    "analytics:setup": "node tools/set-google-analytics-id.mjs",
     "optimize:images": "node tools/optimize-images.mjs",
     "prune:wordpress": "node tools/prune-wordpress-static.mjs",
     "prune:wordpress:dry": "node tools/prune-wordpress-static.mjs --dry-run",
+    "seo:setup": "node tools/update-seo-metadata.mjs",
     "serve": "node tools/serve-static.mjs"
   },
   "devDependencies": {

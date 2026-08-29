@@ -22,6 +22,20 @@ npm run optimize:images
 
 El script convierte los PNG de `wp-content/uploads`, actualiza las paginas HTML publicas para usar los WebP optimizados y deja el detalle de cada archivo en `assets/images/manifest.json`.
 
+## SEO
+
+El sitio tiene una capa SEO reproducible en `tools/update-seo-metadata.mjs`. Este script actualiza los titulos, descripciones, canonical absolutas, etiquetas Open Graph/Twitter y datos estructurados JSON-LD de las paginas HTML. Tambien genera `sitemap.xml` y `robots.txt`.
+
+Para regenerar la configuracion SEO:
+
+```bash
+npm run seo:setup
+```
+
+La URL canonica por defecto es `https://b-aura.es`. Si algun dia necesitas usar otro dominio, define `SITE_URL` antes de ejecutar el script.
+
+El sitemap incluye las paginas publicas principales: inicio, servicios, asesorias, cursos, blog, sobre mi, testimonios y contacto. Las paginas de carrito, finalizar compra, mi cuenta, gracias, autor y redireccion de tienda quedan con `noindex, follow` para evitar que compitan en Google con las paginas importantes.
+
 ## Limpieza de WordPress
 
 Como la web se sirve en Netlify y WordPress ya no se ejecuta aqui, puedes apartar los archivos no usados con:
@@ -47,6 +61,24 @@ npm run serve
 ```
 
 Por defecto abre el sitio en `http://localhost:4173`.
+
+## Google Analytics
+
+El sitio carga Google Analytics desde `assets/js/google-analytics.js` en todas las paginas HTML publicas. El script usa Consent Mode con la analitica desactivada por defecto y muestra un aviso para aceptar o rechazar la medicion.
+
+Ademas registra eventos de conversion:
+
+- `click_whatsapp_cta`: clics en enlaces de WhatsApp (`wa.me`, `wa.link` y dominios de WhatsApp), con parametros como `cta_text`, `cta_area`, `link_domain` y `link_url`.
+- `generate_lead`: envio del formulario de contacto, con `form_id`, `form_name`, `form_destination` y `method`.
+- `qualify_lead`: evento clave de GA4 enviado tanto en clics de WhatsApp como en envios del formulario, con `lead_type` para distinguir `whatsapp` de `contact_form`.
+
+Para configurar el identificador de medicion de GA4:
+
+```bash
+npm run analytics:setup -- G-XXXXXXXXXX
+```
+
+Tambien puedes definir `GA_MEASUREMENT_ID` en Netlify. El build ejecuta `npm run analytics:setup`; si la variable existe, actualiza todas las paginas con ese identificador. Si no existe, conserva el identificador que ya este escrito en los HTML.
 
 ## Formulario de contacto
 

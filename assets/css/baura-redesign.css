@@ -24,10 +24,14 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
+  overflow-x: hidden;
+  overflow-x: clip;
   color: var(--ink);
   background: var(--cream);
   font-family: "Montserrat", Arial, sans-serif;
@@ -168,6 +172,7 @@ p {
   position: sticky;
   top: 0;
   z-index: 100;
+  overflow: clip;
   border-bottom: 1px solid rgba(113, 193, 118, 0.42);
   background: var(--deep);
   color: var(--white);
@@ -178,13 +183,15 @@ p {
   align-items: center;
   justify-content: space-between;
   min-height: 70px;
+  min-width: 0;
   gap: 24px;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  min-width: max-content;
+  flex: 0 0 auto;
+  min-width: 0;
 }
 
 .brand-logo {
@@ -233,6 +240,8 @@ p {
 .header-actions {
   display: inline-flex;
   align-items: center;
+  flex: 0 1 auto;
+  min-width: 0;
   gap: 10px;
 }
 
@@ -1649,6 +1658,11 @@ label {
   font-weight: 800;
 }
 
+.required-mark {
+  color: var(--rose-dark);
+  font-weight: 800;
+}
+
 input,
 select,
 textarea {
@@ -1883,6 +1897,7 @@ a:focus-visible {
 
   .header-inner {
     min-height: 68px;
+    gap: 14px;
   }
 
   .brand-logo {
@@ -1996,22 +2011,39 @@ a:focus-visible {
     height: 42px;
   }
 
+  .container {
+    width: min(100% - 24px, var(--max));
+  }
+
+  .header-inner {
+    justify-content: space-between;
+    gap: 8px;
+  }
+
   .header-actions {
-    gap: 6px;
+    gap: 5px;
+    margin-left: auto;
   }
 
   .site-header .social-links {
-    gap: 6px;
+    gap: 5px;
   }
 
   .site-header .social-links a {
-    width: 31px;
-    height: 31px;
+    width: 30px;
+    height: 30px;
   }
 
   .site-header .social-links svg {
-    width: 15.5px;
-    height: 15.5px;
+    width: 15px;
+    height: 15px;
+  }
+
+  .menu-toggle {
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    padding: 8px;
   }
 
   .card-grid,
@@ -2099,6 +2131,38 @@ a:focus-visible {
     bottom: 14px;
     width: 46px;
     height: 46px;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    width: min(100% - 20px, var(--max));
+  }
+
+  .brand-logo {
+    width: 52px;
+    height: 36px;
+  }
+
+  .header-actions,
+  .site-header .social-links {
+    gap: 4px;
+  }
+
+  .site-header .social-links a {
+    width: 28px;
+    height: 28px;
+  }
+
+  .site-header .social-links svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .menu-toggle {
+    flex-basis: 36px;
+    width: 36px;
+    height: 36px;
   }
 }
 

@@ -1,4 +1,4 @@
-const CONTACT_FORM_NAME = "contacto";
+const CONTACT_FORM_NAMES = new Set(["contacto", "contacto-b-aura"]);
 const RESEND_API_BASE_URL = "https://api.resend.com";
 const CONTACT_EMAIL = "contacto@b-aura.es";
 const REPLY_TO_EMAIL = "mariana03011991@gmail.com";
@@ -211,7 +211,7 @@ export default {
 		const data = event.data || {};
 		const formName = data["form-name"] || data.formName || data.form_name;
 
-		if (formName && formName !== CONTACT_FORM_NAME) {
+		if (formName && !CONTACT_FORM_NAMES.has(formName)) {
 			return;
 		}
 

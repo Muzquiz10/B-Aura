@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "analytics:setup": "node tools/set-google-analytics-id.mjs",
+    "redesign:build": "node tools/build-baura-redesign.mjs",
     "optimize:images": "node tools/optimize-images.mjs",
     "prune:wordpress": "node tools/prune-wordpress-static.mjs",
     "prune:wordpress:dry": "node tools/prune-wordpress-static.mjs --dry-run",

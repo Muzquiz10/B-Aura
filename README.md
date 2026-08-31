@@ -91,13 +91,13 @@ El formulario de `contacto/index.html` esta adaptado para Netlify Forms. Para qu
 
 ### Avisos y respuesta automatica con Resend
 
-Netlify guarda las entradas en `Forms`. Para recibir una copia por correo, crea una notificacion de formulario y pon como destinatario el correo que quieras usar, por ejemplo `contacto@b-aura.es`.
+Netlify guarda las entradas en `Forms`. Para recibir una copia por correo, crea una notificacion de formulario y pon como destinatario el correo que quieras usar, por ejemplo `mariana03011991@gmail.com`.
 
 El formulario tiene un campo `email`, asi que las notificaciones de Netlify podran usarlo como `Reply-To` para responder directamente al cliente.
 
 Tambien hay una respuesta automatica preparada con Resend:
 
-1. En Resend, verifica el dominio `b-aura.es` o el remitente `contacto@b-aura.es`.
+1. En Resend, verifica el dominio `b-aura.es` o el remitente tecnico configurado en la funcion (`contacto@b-aura.es`). El `Reply-To` de la respuesta automatica usa `mariana03011991@gmail.com`.
 2. Crea una API key en Resend.
 3. En Netlify, ve a `Project configuration > Environment variables`.
 4. Crea `RESEND_API_KEY` con la API key de Resend.

@@ -383,11 +383,15 @@ button.button {
 }
 
 .hero-copy {
+  width: 100%;
+  min-width: 0;
   align-self: center;
 }
 
 .hero-visual {
   display: flex;
+  width: 100%;
+  min-width: 0;
   align-items: stretch;
   justify-content: center;
 }
@@ -595,7 +599,15 @@ button.button {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  max-width: 100%;
   gap: 8px;
+}
+
+.cta-stack > .button {
+  max-width: 100%;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .cta-stack.center {
@@ -1896,6 +1908,7 @@ a:focus-visible {
   }
 
   .header-inner {
+    position: relative;
     min-height: 68px;
     gap: 14px;
   }
@@ -1928,6 +1941,21 @@ a:focus-visible {
 
   .menu-toggle {
     display: block;
+    position: relative;
+    z-index: 2;
+  }
+
+  .header-actions {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+
+  .site-header .social-links {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
   }
 
   .hero-grid,
@@ -1967,7 +1995,8 @@ a:focus-visible {
 
   .hero-photo {
     height: auto;
-    max-width: 390px;
+    width: 100%;
+    max-width: min(390px, 100%);
   }
 
   .program-includes {
@@ -2057,14 +2086,18 @@ a:focus-visible {
   }
 
   .hero-tags {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     width: 100%;
+    overflow-x: visible;
     font-size: 0.76rem;
   }
 
   .hero-tags span {
+    justify-content: center;
+    min-width: 0;
     gap: 6px;
-    padding: 8px 9px;
+    padding: 8px 7px;
   }
 
   .hero-tag-icon svg {
@@ -2073,8 +2106,16 @@ a:focus-visible {
   }
 
   .hero-tags span + span {
-    border-left: 1px solid rgba(113, 193, 118, 0.35);
+    border-left: 0;
     border-top: 0;
+  }
+
+  .hero-tags span:nth-child(2n) {
+    border-left: 1px solid rgba(113, 193, 118, 0.35);
+  }
+
+  .hero-tags span:nth-child(n + 3) {
+    border-top: 1px solid rgba(113, 193, 118, 0.35);
   }
 
   .cta-stack > .button,

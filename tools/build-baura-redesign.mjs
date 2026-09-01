@@ -13,7 +13,7 @@ const logo = "/assets/images/optimized/brand/bauras_transparente-300x300.webp";
 const headerLogo = "/assets/images/optimized/brand/baura-logo-header.webp";
 const footerLogo = "/assets/images/optimized/brand/cropped-bauras_transparente-768x547.webp";
 const analytics = "/assets/js/google-analytics.js";
-const assetVersion = "20260831-mobile-header-required-fields";
+const assetVersion = "20260901-mobile-hero-width";
 const googleReviewsUrl =
   "https://www.google.com/search?sxsrf=APpeQnsMOJlXXCLAx00mEh2pPhvnIUIKDQ:1788101988463&q=b-aura&si=APenkKm7iecQ4G6P-TsbSMFKIQtv3EFIqRAFw-i8uEbk55Z-_xHp49e161pj9yO2tcNb5ay-ITlo-tuBPzBYig5Iuyb8Bfkv04_xtRRPc4zgsFzgPJfLnBk%3D&uds=AJ5uw18QtvbJHV0_aO48vjl81DB9yFLFuNcBu0_m2YlKdo5NlaNg_s7AwpsTrHYV9Ebo9-fZDTYffiHj1n0XHXnpAsTIhoznc7QQGKvS5kUll3RKEmGxPGE";
 

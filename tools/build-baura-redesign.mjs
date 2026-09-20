@@ -8,12 +8,12 @@ const siteUrl = "https://b-aura.es";
 const whatsappUrl =
   "https://wa.me/34658876022?text=Hola%20Mariana%2C%20quiero%20saber%20si%20B-Aura%20es%20para%20m%C3%AD.";
 const photo = "/assets/images/optimized/content/mariana-presentacion.webp";
-const supportPhoto = "/assets/images/optimized/content/nutricion-entrenamiento-apoyo.webp";
+const supportPhoto = "/assets/images/optimized/content/nutricion-entrenamiento-apoyo.jpeg";
 const logo = "/assets/images/optimized/brand/bauras_transparente-300x300.webp";
 const headerLogo = "/assets/images/optimized/brand/baura-logo-header.webp";
 const footerLogo = "/assets/images/optimized/brand/cropped-bauras_transparente-768x547.webp";
 const analytics = "/assets/js/google-analytics.js";
-const assetVersion = "20260901-mobile-hero-width";
+const assetVersion = "20260920-quote-color";
 const googleReviewsUrl =
   "https://www.google.com/search?sxsrf=APpeQnsMOJlXXCLAx00mEh2pPhvnIUIKDQ:1788101988463&q=b-aura&si=APenkKm7iecQ4G6P-TsbSMFKIQtv3EFIqRAFw-i8uEbk55Z-_xHp49e161pj9yO2tcNb5ay-ITlo-tuBPzBYig5Iuyb8Bfkv04_xtRRPc4zgsFzgPJfLnBk%3D&uds=AJ5uw18QtvbJHV0_aO48vjl81DB9yFLFuNcBu0_m2YlKdo5NlaNg_s7AwpsTrHYV9Ebo9-fZDTYffiHj1n0XHXnpAsTIhoznc7QQGKvS5kUll3RKEmGxPGE";
 
@@ -105,11 +105,11 @@ const googleReviews = [
 
 const programs = [
   {
-    title: "Plan de Bienestar Activo",
+    title: "BIENESTAR ACTIVO 90",
     price: "365 €/mes",
-    kind: "Servicio principal",
+    kind: "Acompañamiento individualizado 1:1 · 90 días",
     text:
-      "Un programa diseñado para quienes quieren dejar de empezar de cero y construir una forma de cuidarse que puedan mantener en el tiempo.",
+      "Un acompañamiento profesional para ayudarte a mejorar tu alimentación, trabajar sobre tus objetivos de salud y composición corporal, y encontrar una forma de cuidarte que encaje con tu vida real.",
     forWhom:
       "Para hombres y mujeres de 30 a 60 años que quieren trabajar nutrición, entrenamiento y hábitos dentro de una misma estrategia.",
     includes: activePlanIncludes,
@@ -279,11 +279,14 @@ ${main}
 `;
 }
 
-function ctaChooser(id, label = "QUIERO SABER SI B-AURA ES PARA MÍ", center = false) {
+function ctaChooser(id, label = "QUIERO SABER SI ES PARA MI", center = false) {
   const optionsId = `${id}-options`;
+  const note = id === "hero"
+    ? '<p class="cta-note hero-plan-note"><strong>BIENESTAR ACTIVO 90</strong><span>Acompañamiento individualizado 1:1 · 90 días</span></p>'
+    : '<p class="cta-note">Puedes elegir cómo contactar conmigo.</p>';
   return `<div class="cta-stack${center ? " center" : ""}">
   <button class="button button-primary" type="button" data-contact-toggle aria-expanded="false" aria-controls="${optionsId}">${label}</button>
-  <p class="cta-note">Puedes elegir cómo contactar conmigo.</p>
+  ${note}
   <div class="contact-options" id="${optionsId}" hidden>
     <a class="contact-option" href="${whatsappUrl}" target="_blank" rel="noopener noreferrer">
       ${icons.whatsapp}
@@ -293,22 +296,6 @@ function ctaChooser(id, label = "QUIERO SABER SI B-AURA ES PARA MÍ", center = f
       ${icons.form}
       <span><strong>Enviar formulario</strong><span>Escribir desde la web.</span></span>
     </a>
-  </div>
-</div>`;
-}
-
-function programCtaStrip() {
-  return `<div class="program-cta-strip">
-  <div class="container program-cta-inner">
-    <div class="program-cta-copy">
-      <h2>¿Estás preparado/a para dejar de empezar de cero?</h2>
-      <p>No necesitas hacerlo perfecto. Necesitas una estrategia que puedas mantener.</p>
-    </div>
-    <div class="strip-actions">
-      <a class="button button-primary" href="/contacto/">QUIERO SABER SI B-AURA ES PARA MÍ</a>
-      <a class="button button-whatsapp" href="${whatsappUrl}" target="_blank" rel="noopener noreferrer">${icons.whatsapp}<span>WhatsApp</span></a>
-      <a class="button button-outline-rose" href="/contacto/#formulario">${icons.form}<span>Formulario</span></a>
-    </div>
   </div>
 </div>`;
 }
@@ -384,23 +371,23 @@ function heroTagIcon(type) {
 
 function homePage() {
   const identification = [
-    "Empiezas dietas que consigues mantener unas semanas, pero después las abandonas.",
-    "Quieres perder grasa o mejorar tu composición corporal sin vivir pendiente de las restricciones.",
-    "Te falta tiempo para organizar tus comidas y entrenamientos.",
-    "Sabes qué deberías hacer, pero te cuesta mantener la constancia.",
-    "Quieres volver a entrenar y sentirte con más energía.",
-    "Estás cansado/a de empezar de nuevo cada lunes.",
+    "Quieres perder peso, pero te cuesta mantenerlo.",
+    "Tus analíticas te han hecho prestar más atención a tu salud.",
+    "Sabes qué deberías hacer, pero te cuesta llevarlo a tu día a día.",
+    "Has probado diferentes formas de cuidarte y vuelves al mismo punto.",
+    "Quieres mejorar tu alimentación sin vivir a dieta.",
+    "Sientes que necesitas estructura y acompañamiento para avanzar.",
   ];
 
   const forWhom = [
-    "Quieres mejorar tu composición corporal.",
-    "Quieres perder grasa sin recurrir a dietas extremas.",
-    "Necesitas organizar mejor tu alimentación.",
-    "Quieres volver a entrenar o mejorar tu condición física.",
-    "Tienes poco tiempo y necesitas que el plan se adapte a tu agenda.",
-    "Te cuesta mantener la constancia cuando tienes mucho trabajo o responsabilidades.",
-    "Quieres sentirte con más energía y recuperar buenos hábitos.",
-    "Buscas acompañamiento profesional durante el proceso.",
+    "Quieres perder peso y mejorar tu composición corporal.",
+    "Quieres cuidar tu salud y mejorar tu alimentación.",
+    "Sabes qué deberías hacer, pero te cuesta llevarlo a tu día a día.",
+    "Has intentado hacerlo por tu cuenta y sientes que no consigues avanzar como te gustaría.",
+    "Quieres una estrategia adaptada a tu situación, tus horarios y tu vida real.",
+    "Quieres aprender a tomar mejores decisiones sin depender de dietas extremas.",
+    "Estás dispuesto/a a implicarte y trabajar activamente durante el proceso.",
+    "Valoras tener seguimiento profesional y poder ajustar la estrategia cuando sea necesario.",
   ];
 
   const results = [
@@ -419,11 +406,12 @@ function homePage() {
     main: `    <section class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <span class="eyebrow">Nutrición · Entrenamiento · Hábitos · Seguimiento</span>
-          <h1>Nutrición y entrenamiento para volver a <span>sentirte bien.</span></h1>
-          <p class="lead">Un acompañamiento profesional para mejorar tu alimentación, recuperar tu energía y ponerte en forma con una estrategia que se adapte a tu vida real.</p>
-          <p class="hero-note">Para hombres y mujeres de 30 a 60 años que buscan resultados sostenibles sin dietas extremas ni entrenamientos imposibles.</p>
-          ${ctaChooser("hero")}
+          <div class="hero-heading">
+            <span class="eyebrow">Nutrición · Entrenamiento · Hábitos · Seguimiento</span>
+            <h1>Ayudo a hombres y mujeres de 35 a 60 años a perder peso, mejorar su salud y volver a sentirse bien con su cuerpo <span>mediante una estrategia nutricional individualizada.</span></h1>
+          </div>
+          <p class="lead">Un acompañamiento profesional 1:1 para establecer una estrategia adaptada a tu situación y llevarla a tu vida real.</p>
+          ${ctaChooser("hero", "QUIERO SABER SI ESTE ACOMPAÑAMIENTO ES PARA MÍ")}
           <div class="hero-tags" aria-label="Áreas de trabajo">
             <span>${heroTagIcon("nutrition")}Nutrición</span>
             <span>${heroTagIcon("training")}Entrenamiento</span>
@@ -443,16 +431,16 @@ function homePage() {
     <section class="section section-identification">
       <div class="container">
         <div class="section-header center">
-          <h2>¿Te resulta difícil cuidarte <span class="text-rose">cuando</span> tu vida no se detiene?</h2>
+          <h2>¿Te reconoces en alguna de estas situaciones?</h2>
         </div>
         <div class="identification-grid">
           ${checkList(identification)}
           <div class="quote-card">
-            <img src="${logo}" alt="" width="82" height="82">
+            <img src="${logo}" alt="" width="112" height="112">
             <p>No necesitas otro plan que abandonar.<br>Necesitas una estrategia que puedas mantener.</p>
           </div>
           <figure class="support-image">
-            <img src="${supportPhoto}" alt="Alimentación y entrenamiento como parte de una estrategia de bienestar" width="1200" height="800" loading="lazy">
+            <img src="${supportPhoto}" alt="Alimentación y entrenamiento como parte de una estrategia de bienestar" width="1600" height="1066" loading="lazy">
           </figure>
         </div>
       </div>
@@ -478,12 +466,12 @@ function homePage() {
         <div class="program-layout">
           <article class="program-card home-program-card">
             <div class="program-summary">
-              <p class="program-kicker">Programa principal</p>
-              <h2>Plan de Bienestar Activo</h2>
+              <p class="program-kicker">Acompañamiento individualizado 1:1 · 90 días</p>
+              <h2>BIENESTAR ACTIVO 90</h2>
               <p class="lead">Nutrición + entrenamiento + hábitos + seguimiento</p>
-              <p>Un programa diseñado para quienes quieren dejar de empezar de cero y construir una forma de cuidarse que puedan mantener en el tiempo.</p>
+              <p>Un acompañamiento profesional para ayudarte a mejorar tu alimentación, trabajar sobre tus objetivos de salud y composición corporal, y encontrar una forma de cuidarte que encaje con tu vida real.</p>
               <div class="price">365 €/mes</div>
-              <p class="price-note">Compromiso recomendado: 3 meses.</p>
+              <p class="price-note">Duración: 90 días</p>
               ${ctaChooser("programa")}
             </div>
             <div class="program-includes">
@@ -491,19 +479,14 @@ function homePage() {
               ${checkList(activePlanIncludes, "feature-list")}
             </div>
           </article>
-          <aside class="offer-column" aria-label="Servicios adicionales">
-            <article class="mini-card offer-card">${serviceIcon("bowl")}<div><h3>Nutrición</h3><div class="mini-price">245 €/mes</div></div><a href="/servicios/#nutricion" aria-label="Ver programa de nutrición">›</a></article>
-            <article class="mini-card offer-card">${serviceIcon("training")}<div><h3>Entrenamiento</h3><div class="mini-price">205 €/mes</div></div><a href="/servicios/#entrenamiento" aria-label="Ver programa de entrenamiento">›</a></article>
-          </aside>
         </div>
       </div>
-      ${programCtaStrip()}
     </section>
 
     <section class="section section-dark audience-results-section">
       <div class="container audience-results-grid">
         <article class="audience-panel">
-          <h2>B-Aura es para ti si...</h2>
+          <h2>Bienestar Activo 90 es para ti si...</h2>
           ${checkList(forWhom, "check-list audience-list")}
         </article>
         <article class="audience-panel results-panel">
@@ -554,7 +537,7 @@ function homePage() {
           <article class="step-card"><span class="step-number">03</span><h3>Empezamos</h3><p>Diseñamos tu estrategia y comenzamos el acompañamiento.</p></article>
           <article class="step-card"><span class="step-number">04</span><h3>Evolucionamos contigo</h3><p>Revisamos tu evolución y realizamos los ajustes necesarios durante el proceso.</p></article>
         </div>
-        <div class="section-cta">${ctaChooser("como-funciona", "QUIERO SABER SI B-AURA ES PARA MÍ", true)}</div>
+        <div class="section-cta">${ctaChooser("como-funciona", "QUIERO SABER SI ES PARA MI", true)}</div>
       </div>
     </section>
 
@@ -573,7 +556,7 @@ function homePage() {
       <div class="container">
         <h2>¿Estás preparado/a para dejar de empezar de cero?</h2>
         <p class="lead centered">No necesitas hacerlo perfecto. Necesitas una estrategia que puedas mantener.</p>
-        ${ctaChooser("final", "QUIERO SABER SI B-AURA ES PARA MÍ", true)}
+        ${ctaChooser("final", "QUIERO SABER SI ES PARA MI", true)}
       </div>
     </section>`,
   });
@@ -584,12 +567,12 @@ function programsPage() {
     currentPath: "/servicios/",
     title: "Programas | B-Aura",
     description:
-      "Plan de Bienestar Activo, Nutrición y Entrenamiento de B-Aura: opciones de acompañamiento profesional desde 205 €/mes.",
+      "BIENESTAR ACTIVO 90, Nutrición y Entrenamiento de B-Aura: opciones de acompañamiento profesional desde 205 €/mes.",
     main: `    <section class="page-hero">
       <div class="container">
         <span class="eyebrow">Programas B-Aura</span>
         <h1>Nutrición, entrenamiento y hábitos con una estrategia clara.</h1>
-        <p class="lead">El Plan de Bienestar Activo es el servicio principal. Después puedes encontrar opciones centradas en nutrición o entrenamiento.</p>
+        <p class="lead">BIENESTAR ACTIVO 90 es el servicio principal. Después puedes encontrar opciones centradas en nutrición o entrenamiento.</p>
       </div>
     </section>
 
@@ -608,7 +591,7 @@ function programsPage() {
             ${checkList(program.includes, "feature-list")}
           </div>
           <aside class="price-panel">
-            <div class="price">${program.price}</div>${program.main ? "\n            <p class=\"price-note\">Compromiso recomendado: 3 meses.</p>" : ""}
+            <div class="price">${program.price}</div>${program.main ? "\n            <p class=\"price-note\">Duración: 90 días</p>" : ""}
             <p>Escríbeme y cuéntame qué quieres mejorar. Te explicaré cómo funciona y qué opción puede encajar mejor contigo.</p>
             ${ctaChooser(`servicio-${program.title.toLowerCase().replaceAll(" ", "-")}`)}
           </aside>
@@ -692,7 +675,7 @@ function aboutPage() {
           <article class="step-card"><span class="step-number">03</span><h3>Revisamos evolución</h3><p>No te quedas con un plan fijo: ajustamos durante el proceso.</p></article>
           <article class="step-card"><span class="step-number">04</span><h3>Construimos continuidad</h3><p>Buscamos que cuidarte forme parte de tu vida, no de una etapa.</p></article>
         </div>
-        <div class="section-cta">${ctaChooser("sobre-mi-cta", "QUIERO SABER SI B-AURA ES PARA MÍ", true)}</div>
+        <div class="section-cta">${ctaChooser("sobre-mi-cta", "QUIERO SABER SI ES PARA MI", true)}</div>
       </div>
     </section>`,
   });
@@ -719,7 +702,7 @@ function contactForm() {
       <label for="servicio">¿Qué servicio te interesa? <span class="required-mark" aria-hidden="true">*</span></label>
       <select id="servicio" name="servicio" required aria-required="true">
         <option value="">Selecciona una opción</option>
-        <option>Plan de Bienestar Activo</option>
+        <option>BIENESTAR ACTIVO 90</option>
         <option>Nutrición</option>
         <option>Entrenamiento</option>
         <option>No estoy seguro/a</option>

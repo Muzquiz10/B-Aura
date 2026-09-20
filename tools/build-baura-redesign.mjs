@@ -109,7 +109,7 @@ const programs = [
     price: "365 €/mes",
     kind: "Acompañamiento individualizado 1:1 · 90 días",
     text:
-      "Un acompañamiento profesional para ayudarte a mejorar tu alimentación, trabajar sobre tus objetivos de salud y composición corporal, y encontrar una forma de cuidarte que encaje con tu vida real.",
+      "Un acompañamiento profesional que te ayudará a mejorar tu alimentación, trabajar sobre tus objetivos de salud y composición corporal, para encontrar una forma de cuidarte que encaje con tu vida real.",
     forWhom:
       "Para hombres y mujeres de 30 a 60 años que quieren trabajar nutrición, entrenamiento y hábitos dentro de una misma estrategia.",
     includes: activePlanIncludes,
@@ -408,7 +408,7 @@ function homePage() {
         <div class="hero-copy">
           <div class="hero-heading">
             <span class="eyebrow">Nutrición · Entrenamiento · Hábitos · Seguimiento</span>
-            <h1>Ayudo a hombres y mujeres de 35 a 60 años a perder peso, mejorar su salud y volver a sentirse bien con su cuerpo <span>mediante una estrategia nutricional individualizada.</span></h1>
+            <h1>Ayudo a hombres y mujeres de 35 a 60 años a perder peso, mejorar su salud y volver a sentirse bien con su cuerpo <span>mediante una estrategia individualizada.</span></h1>
           </div>
           <p class="lead">Un acompañamiento profesional 1:1 para establecer una estrategia adaptada a tu situación y llevarla a tu vida real.</p>
           ${ctaChooser("hero", "QUIERO SABER SI ESTE ACOMPAÑAMIENTO ES PARA MÍ")}
@@ -469,7 +469,7 @@ function homePage() {
               <p class="program-kicker">Acompañamiento individualizado 1:1 · 90 días</p>
               <h2>BIENESTAR ACTIVO 90</h2>
               <p class="lead">Nutrición + entrenamiento + hábitos + seguimiento</p>
-              <p>Un acompañamiento profesional para ayudarte a mejorar tu alimentación, trabajar sobre tus objetivos de salud y composición corporal, y encontrar una forma de cuidarte que encaje con tu vida real.</p>
+              <p>Un acompañamiento profesional que te ayudará a mejorar tu alimentación, trabajar sobre tus objetivos de salud y composición corporal, para encontrar una forma de cuidarte que encaje con tu vida real.</p>
               <div class="price">365 €/mes</div>
               <p class="price-note">Duración: 90 días</p>
               ${ctaChooser("programa")}

@@ -39,7 +39,8 @@ async function listHtmlFiles(directory) {
       continue;
     }
 
-    if (entry.isFile() && entry.name.endsWith(".html")) {
+    // Search Console verification files must retain Google's plain-text content.
+    if (entry.isFile() && entry.name.endsWith(".html") && !/^google[0-9a-f]+\.html$/i.test(entry.name)) {
       files.push(path.join(directory, entry.name));
     }
   }

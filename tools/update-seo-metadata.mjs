@@ -5,7 +5,7 @@ import path from "node:path";
 
 const root = process.cwd();
 const siteUrl = normalizeSiteUrl(process.env.SITE_URL || "https://b-aura.es");
-const lastmod = process.env.SEO_LASTMOD || new Date().toISOString().slice(0, 10);
+// Update each page's lastmod only after a substantive content or metadata change.
 
 const brandName = "B-Aura";
 const defaultImagePath = "/assets/images/optimized/content/mariana-presentacion.webp";
@@ -17,54 +17,50 @@ const socialProfiles = [
   "https://www.linkedin.com/in/mariana-uca%C3%B1ay-milla-50693687/",
 ];
 
-const indexRobots = "index, follow, max-image-preview:large";
+const indexRobots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 const noindexRobots = "noindex, follow";
 
 const pages = [
   {
     file: "index.html",
     path: "/",
-    title: "B-Aura | Nutrición y entrenamiento para volver a sentirte bien",
+    title: "Nutrición y entrenamiento para perder peso | B-Aura",
     description:
-      "B-Aura combina nutrición, entrenamiento, hábitos y seguimiento para ayudarte a mejorar tu composición corporal, energía y bienestar.",
+      "Mejora tu alimentación y composición corporal con nutrición, entrenamiento y hábitos adaptados a ti. Acompañamiento 1:1 con Mariana, nutricionista de B-Aura.",
+    lastmod: "2026-09-24",
     image: defaultImagePath,
-    priority: "1.0",
-    changefreq: "weekly",
   },
   {
     file: "servicios/index.html",
     path: "/servicios/",
-    title: "Programas | B-Aura",
+    title: "Programas de nutrición y entrenamiento personal | B-Aura",
     description:
-      "Plan de Bienestar Activo, Nutrición y Entrenamiento de B-Aura: opciones de acompañamiento profesional desde 205 €/mes.",
+      "Descubre Bienestar Activo 90 y los planes de nutrición y entrenamiento de B-Aura. Estrategia individualizada, seguimiento semanal y ajustes según tu evolución.",
+    lastmod: "2026-09-24",
     image: defaultImagePath,
     breadcrumb: "Programas",
-    priority: "0.9",
-    changefreq: "weekly",
   },
   {
     file: "sobre-mi/index.html",
     path: "/sobre-mi/",
-    title: "Sobre mí | Mariana Ucañay Milla",
+    title: "Mariana Ucañay Milla, nutricionista | B-Aura",
     description:
-      "Conoce a Mariana, nutricionista y creadora de B-Aura, y su forma de integrar alimentación, entrenamiento y hábitos en la vida real.",
+      "Conoce a Mariana Ucañay Milla, licenciada en Nutrición y Dietética, máster en Nutrición Humana y Dietética Aplicada y creadora de B-Aura. Más de 11 años de experiencia.",
+    lastmod: "2026-09-24",
     image: defaultImagePath,
     breadcrumb: "Sobre mí",
     schemaType: "AboutPage",
-    priority: "0.75",
-    changefreq: "monthly",
   },
   {
     file: "contacto/index.html",
     path: "/contacto/",
-    title: "Contacto | B-Aura",
+    title: "Contacta con Mariana, nutricionista de B-Aura",
     description:
-      "Contacta con Mariana por WhatsApp o mediante formulario para saber si B-Aura es adecuado para ti.",
+      "Cuéntale a Mariana tus objetivos por WhatsApp o formulario. Consulta los programas de nutrición y entrenamiento y descubre qué opción de B-Aura encaja contigo.",
+    lastmod: "2026-09-24",
     image: defaultImagePath,
     breadcrumb: "Contacto",
     schemaType: "ContactPage",
-    priority: "0.8",
-    changefreq: "monthly",
   },
   {
     file: "aviso-legal/index.html",
@@ -101,7 +97,6 @@ const pages = [
   {
     file: "asesorias/index.html",
     path: "/asesorias/",
-    canonicalPath: "/servicios/",
     title: "Programas | B-Aura",
     description: "Página heredada no enlazada. Consulta los programas actuales de B-Aura.",
     robots: noindexRobots,
@@ -110,7 +105,6 @@ const pages = [
   {
     file: "cursos/index.html",
     path: "/cursos/",
-    canonicalPath: "/servicios/",
     title: "Programas | B-Aura",
     description: "Página heredada no enlazada. Consulta los programas actuales de B-Aura.",
     robots: noindexRobots,
@@ -119,7 +113,6 @@ const pages = [
   {
     file: "blog/index.html",
     path: "/blog/",
-    canonicalPath: "/",
     title: "B-Aura",
     description: "El blog de B-Aura está oculto temporalmente.",
     robots: noindexRobots,
@@ -128,7 +121,6 @@ const pages = [
   {
     file: "testimonios/index.html",
     path: "/testimonios/",
-    canonicalPath: "/",
     title: "Testimonios | B-Aura",
     description: "Sección de testimonios de B-Aura preparada para opiniones reales autorizadas.",
     robots: noindexRobots,
@@ -137,7 +129,6 @@ const pages = [
   {
     file: "carrito/index.html",
     path: "/carrito/",
-    canonicalPath: "/",
     title: "B-Aura",
     description: "Página heredada no enlazada.",
     robots: noindexRobots,
@@ -146,7 +137,6 @@ const pages = [
   {
     file: "finalizar-compra/index.html",
     path: "/finalizar-compra/",
-    canonicalPath: "/",
     title: "B-Aura",
     description: "Página heredada no enlazada.",
     robots: noindexRobots,
@@ -155,7 +145,6 @@ const pages = [
   {
     file: "mi-cuenta/index.html",
     path: "/mi-cuenta/",
-    canonicalPath: "/",
     title: "B-Aura",
     description: "Página heredada no enlazada.",
     robots: noindexRobots,
@@ -164,7 +153,6 @@ const pages = [
   {
     file: "author/mariana03011991gmail-com/index.html",
     path: "/author/mariana03011991gmail-com/",
-    canonicalPath: "/sobre-mi/",
     title: "Sobre mí | Mariana Ucañay Milla",
     description: "Página heredada no enlazada.",
     robots: noindexRobots,
@@ -173,7 +161,6 @@ const pages = [
   {
     file: "tienda/index.html",
     path: "/tienda/",
-    canonicalPath: "/",
     title: "B-Aura",
     description: "Página heredada no enlazada.",
     robots: noindexRobots,
@@ -210,7 +197,9 @@ function escapeXml(value) {
 }
 
 function pageCanonical(page) {
-  return absoluteUrl(page.canonicalPath || page.path);
+  // Excluded legacy pages are not duplicates of the home or services pages.
+  // Keep their own canonical URL and use noindex to exclude them.
+  return absoluteUrl(page.path);
 }
 
 function pageImage(page) {
@@ -228,15 +217,56 @@ function organizationSchema() {
       url: absoluteUrl(logoPath),
     },
     image: absoluteUrl(defaultImagePath),
-    email: "mariana03011991@gmail.com",
-    telephone: "+34 658 876 022",
     founder: {
-      "@type": "Person",
-      name: "Mariana Ucañay Milla",
-      jobTitle: "Nutricionista y creadora de B-Aura",
+      "@id": `${siteUrl}/#mariana`,
     },
-    sameAs: socialProfiles,
+    sameAs: socialProfiles.filter((url) => !url.includes("linkedin.com/in/")),
   };
+}
+
+function personSchema() {
+  return {
+    "@type": "Person",
+    "@id": `${siteUrl}/#mariana`,
+    name: "Mariana Ucañay Milla",
+    url: absoluteUrl("/sobre-mi/"),
+    image: absoluteUrl(defaultImagePath),
+    jobTitle: "Nutricionista y creadora de B-Aura",
+    description: "Licenciada en Nutrición y Dietética y Máster en Nutrición Humana y Dietética Aplicada, con más de 11 años de experiencia en nutrición y entrenamiento.",
+    sameAs: socialProfiles.filter((url) => url.includes("linkedin.com/in/")),
+    worksFor: { "@id": `${siteUrl}/#organization` },
+    mainEntityOfPage: { "@id": `${absoluteUrl("/sobre-mi/")}#webpage` },
+  };
+}
+
+function servicesSchema() {
+  const services = [
+    ["bienestar-activo", "Bienestar Activo 90", "Nutrición, entrenamiento y hábitos", "Acompañamiento individualizado 1:1 durante 90 días con estrategia de alimentación, entrenamiento adaptado, videollamada semanal y seguimiento."],
+    ["nutricion", "Nutrición", "Asesoramiento nutricional individualizado", "Valoración inicial, estrategia de alimentación individualizada, revisión de hábitos y seguimiento semanal con ajustes según evolución."],
+    ["entrenamiento", "Entrenamiento", "Entrenamiento personal", "Plan de ejercicio adaptado al nivel, disponibilidad y recursos, con revisión de progreso y ajustes semanales."],
+  ].map(([fragment, name, serviceType, description]) => ({
+    "@type": "Service",
+    "@id": `${absoluteUrl("/servicios/")}#servicio-${fragment}`,
+    url: `${absoluteUrl("/servicios/")}#${fragment}`,
+    name,
+    serviceType,
+    description,
+    provider: { "@id": `${siteUrl}/#organization` },
+  }));
+  return [
+    {
+      "@type": "ItemList",
+      "@id": `${absoluteUrl("/servicios/")}#programas`,
+      name: "Programas de nutrición y entrenamiento de B-Aura",
+      numberOfItems: services.length,
+      itemListElement: services.map((service, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: { "@id": service["@id"] },
+      })),
+    },
+    ...services,
+  ];
 }
 
 function websiteSchema() {
@@ -267,8 +297,11 @@ function webpageSchema(page) {
       "@id": `${siteUrl}/#website`,
     },
     about: {
-      "@id": `${siteUrl}/#organization`,
+      "@id": `${siteUrl}/#${page.path === "/sobre-mi/" ? "mariana" : "organization"}`,
     },
+    ...(page.path === "/sobre-mi/" ? { mainEntity: { "@id": `${siteUrl}/#mariana` } } : {}),
+    ...(page.path === "/servicios/" ? { mainEntity: { "@id": `${absoluteUrl("/servicios/")}#programas` } } : {}),
+    ...(page.path !== "/" ? { breadcrumb: { "@id": `${pageCanonical(page)}#breadcrumb` } } : {}),
     primaryImageOfPage: {
       "@type": "ImageObject",
       url: pageImage(page),
@@ -277,7 +310,7 @@ function webpageSchema(page) {
 }
 
 function breadcrumbSchema(page) {
-  if ((page.canonicalPath || page.path) === "/") {
+  if (page.path === "/") {
     return null;
   }
 
@@ -306,7 +339,8 @@ function structuredData(page) {
     return "";
   }
 
-  const graph = [organizationSchema(), websiteSchema(), webpageSchema(page)];
+  const graph = [organizationSchema(), personSchema(), websiteSchema(), webpageSchema(page)];
+  if (page.path === "/servicios/") graph.push(...servicesSchema());
   const breadcrumbs = breadcrumbSchema(page);
 
   if (breadcrumbs) {
@@ -342,6 +376,7 @@ function seoBlock(page) {
     `<meta name="twitter:title" content="${escapeHtml(page.title)}">`,
     `<meta name="twitter:description" content="${escapeHtml(page.description)}">`,
     `<meta name="twitter:image" content="${escapeHtml(image)}">`,
+    '<meta name="twitter:image:alt" content="Mariana, nutricionista y creadora de B-Aura">',
   ];
 
   if (jsonLd) {
@@ -358,7 +393,7 @@ function removeManagedSeo(head) {
     .replace(/<!-- B-Aura SEO metadata -->[\s\S]*?<!-- \/B-Aura SEO metadata -->\s*/gi, "")
     .replace(/<script\b(?=[^>]*\bid=["']baura-seo-jsonld["'])[^>]*>[\s\S]*?<\/script>\s*/gi, "")
     .replace(/<title\b[^>]*>[\s\S]*?<\/title>\s*/gi, "")
-    .replace(/<meta\b(?=[^>]*\bname=["'](?:description|robots|twitter:card|twitter:title|twitter:description|twitter:image)["'])[^>]*>\s*/gi, "")
+    .replace(/<meta\b(?=[^>]*\bname=["'](?:description|robots|twitter:card|twitter:title|twitter:description|twitter:image|twitter:image:alt)["'])[^>]*>\s*/gi, "")
     .replace(/<meta\b(?=[^>]*\bproperty=["'](?:og:locale|og:type|og:site_name|og:title|og:description|og:url|og:image|og:image:alt)["'])[^>]*>\s*/gi, "")
     .replace(/<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>\s*/gi, "");
 }
@@ -399,9 +434,7 @@ function sitemapXml() {
     .map(
       (page) => `  <url>
     <loc>${escapeXml(pageCanonical(page))}</loc>
-    <lastmod>${escapeXml(lastmod)}</lastmod>
-    <changefreq>${escapeXml(page.changefreq || "monthly")}</changefreq>
-    <priority>${escapeXml(page.priority || "0.5")}</priority>
+    <lastmod>${escapeXml(page.lastmod)}</lastmod>
   </url>`,
     )
     .join("\n");

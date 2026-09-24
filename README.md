@@ -34,7 +34,13 @@ npm run seo:setup
 
 La URL canonica por defecto es `https://b-aura.es`. Si algun dia necesitas usar otro dominio, define `SITE_URL` antes de ejecutar el script.
 
-El sitemap incluye las paginas publicas principales: inicio, servicios, asesorias, cursos, blog, sobre mi, testimonios y contacto. Las paginas de carrito, finalizar compra, mi cuenta, gracias, autor y redireccion de tienda quedan con `noindex, follow` para evitar que compitan en Google con las paginas importantes.
+El sitemap incluye solo las cuatro paginas publicas actuales: inicio, servicios, sobre mi y contacto. Las paginas legales, de agradecimiento y las secciones heredadas (asesorias, cursos, blog, testimonios, carrito, finalizar compra, mi cuenta, autor y tienda) quedan con `noindex, follow`, una canonical propia y fuera del sitemap. No deben bloquearse en robots.txt: Google necesita rastrearlas para leer el noindex.
+
+Los datos estructurados describen la organizacion, a Mariana como profesional, las paginas y sus rutas de navegacion. Servicios incluye los tres programas reales mediante `Service` e `ItemList`. Las titulaciones y descripciones deben seguir coincidiendo con el contenido visible; no se incluyen valoraciones, ubicaciones ni credenciales no verificadas.
+
+Al cambiar de forma significativa una pagina o sus metadatos, actualiza su campo `lastmod` en `tools/update-seo-metadata.mjs` y ejecuta `npm run seo:setup`. La fecha no se renueva automaticamente en cada despliegue. Los cambios de metadatos deben hacerse en este generador para que Netlify los conserve. Despues de ejecutar `redesign:build`, vuelve a ejecutar `seo:setup`.
+
+Search Console esta verificado mediante `google06ee4a3e0acdc532.html`. Conserva este archivo y su contenido original en cada publicacion.
 
 ## Limpieza de WordPress
 

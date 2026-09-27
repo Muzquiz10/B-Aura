@@ -6,7 +6,7 @@ import path from "node:path";
 const root = process.cwd();
 const siteUrl = "https://b-aura.es";
 const whatsappUrl =
-  "https://wa.me/34658876022?text=Hola%20Mariana%2C%20quiero%20saber%20si%20B-Aura%20es%20para%20m%C3%AD.";
+  "https://wa.me/34658876022?text=Hola%21%0AMe%20gustar%C3%ADa%20saber%20si%20este%20acompa%C3%B1amiento%20es%20para%20m%C3%AD";
 const photo = "/assets/images/optimized/content/mariana-presentacion.webp";
 const supportPhoto = "/assets/images/optimized/content/nutricion-entrenamiento-apoyo.jpeg";
 const logo = "/assets/images/optimized/brand/bauras_transparente-300x300.webp";

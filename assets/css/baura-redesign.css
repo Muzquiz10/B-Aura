@@ -1689,6 +1689,54 @@ button.button {
   grid-column: 1 / -1;
 }
 
+.choice-field {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+
+.choice-field legend {
+  padding: 0;
+  margin-bottom: 10px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.choice-list {
+  display: grid;
+  gap: 9px;
+}
+
+.choice-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.choice-option:has(input:checked) {
+  border-color: var(--green-dark);
+  background: #f2faf2;
+}
+
+.choice-option input {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--green-dark);
+}
+
+.conditional-field[hidden] {
+  display: none;
+}
+
 label {
   color: var(--ink);
   font-size: 0.88rem;

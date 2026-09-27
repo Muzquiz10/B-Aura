@@ -13,7 +13,7 @@ const logo = "/assets/images/optimized/brand/bauras_transparente-300x300.webp";
 const headerLogo = "/assets/images/optimized/brand/baura-logo-header.webp";
 const footerLogo = "/assets/images/optimized/brand/cropped-bauras_transparente-768x547.webp";
 const analytics = "/assets/js/google-analytics.js";
-const assetVersion = "20260920-quote-color";
+const assetVersion = "20260927-contact-form";
 const googleReviewsUrl =
   "https://www.google.com/search?sxsrf=APpeQnsMOJlXXCLAx00mEh2pPhvnIUIKDQ:1788101988463&q=b-aura&si=APenkKm7iecQ4G6P-TsbSMFKIQtv3EFIqRAFw-i8uEbk55Z-_xHp49e161pj9yO2tcNb5ay-ITlo-tuBPzBYig5Iuyb8Bfkv04_xtRRPc4zgsFzgPJfLnBk%3D&uds=AJ5uw18QtvbJHV0_aO48vjl81DB9yFLFuNcBu0_m2YlKdo5NlaNg_s7AwpsTrHYV9Ebo9-fZDTYffiHj1n0XHXnpAsTIhoznc7QQGKvS5kUll3RKEmGxPGE";
 
@@ -687,19 +687,33 @@ function contactForm() {
   <p class="bot-field"><label>No rellenes este campo <input name="bot-field"></label></p>
   <div class="form-grid">
     <div class="field">
-      <label for="nombre">Nombre <span class="required-mark" aria-hidden="true">*</span></label>
+      <label for="nombre">1. Nombre <span class="required-mark" aria-hidden="true">*</span></label>
       <input id="nombre" name="nombre" autocomplete="name" required aria-required="true">
     </div>
     <div class="field">
-      <label for="email">Email <span class="required-mark" aria-hidden="true">*</span></label>
+      <label for="email">2. Email <span class="required-mark" aria-hidden="true">*</span></label>
       <input id="email" type="email" name="email" autocomplete="email" required aria-required="true">
     </div>
-    <div class="field">
-      <label for="telefono">WhatsApp / teléfono</label>
-      <input id="telefono" type="tel" name="telefono" autocomplete="tel">
+    <div class="field-full">
+      <label for="telefono">3. Teléfono / WhatsApp <span class="required-mark" aria-hidden="true">*</span></label>
+      <input id="telefono" type="tel" name="telefono" autocomplete="tel" required aria-required="true">
     </div>
-    <div class="field">
-      <label for="servicio">¿Qué servicio te interesa? <span class="required-mark" aria-hidden="true">*</span></label>
+    <fieldset class="field-full choice-field">
+      <legend>4. ¿Qué te gustaría conseguir principalmente con el acompañamiento? <span class="required-mark" aria-hidden="true">*</span></legend>
+      <div class="choice-list">
+        <label class="choice-option"><input type="radio" name="objetivo_principal" value="Perder peso y mejorar mi composición corporal" required><span>Perder peso y mejorar mi composición corporal</span></label>
+        <label class="choice-option"><input type="radio" name="objetivo_principal" value="Mejorar mi alimentación y mis hábitos"><span>Mejorar mi alimentación y mis hábitos</span></label>
+        <label class="choice-option"><input type="radio" name="objetivo_principal" value="Mejorar mi salud y mis analíticas"><span>Mejorar mi salud y mis analíticas</span></label>
+        <label class="choice-option"><input type="radio" name="objetivo_principal" value="Mejorar mi alimentación, entrenamiento y hábitos"><span>Mejorar mi alimentación, entrenamiento y hábitos</span></label>
+        <label class="choice-option"><input type="radio" name="objetivo_principal" value="Otro"><span>Otro</span></label>
+      </div>
+    </fieldset>
+    <div class="field-full">
+      <label for="dificultad">5. ¿Qué es lo que más te está costando conseguir por tu cuenta? <span class="required-mark" aria-hidden="true">*</span></label>
+      <textarea id="dificultad" name="dificultad_principal" required aria-required="true"></textarea>
+    </div>
+    <div class="field-full">
+      <label for="servicio">6. ¿Qué servicio te interesa? <span class="required-mark" aria-hidden="true">*</span></label>
       <select id="servicio" name="servicio" required aria-required="true">
         <option value="">Selecciona una opción</option>
         <option>BIENESTAR ACTIVO 90</option>
@@ -708,10 +722,14 @@ function contactForm() {
         <option>No estoy seguro/a</option>
       </select>
     </div>
-    <div class="field-full">
-      <label for="mejorar">¿Qué te gustaría mejorar? <span class="required-mark" aria-hidden="true">*</span></label>
-      <textarea id="mejorar" name="mejorar" required aria-required="true"></textarea>
-    </div>
+    <fieldset class="field-full choice-field conditional-field" data-investment-question hidden>
+      <legend>7. Para valorar si B-Aura encaja contigo, el acompañamiento individualizado tiene una inversión de <span data-investment-price></span>. ¿Qué opción describe mejor tu situación? <span class="required-mark" aria-hidden="true">*</span></legend>
+      <div class="choice-list">
+        <label class="choice-option"><input type="radio" name="disposicion_inversion" value="Estoy dispuesto/a a realizar esta inversión si considero que el acompañamiento es adecuado para mí." disabled><span>Estoy dispuesto/a a realizar esta inversión si considero que el acompañamiento es adecuado para mí.</span></label>
+        <label class="choice-option"><input type="radio" name="disposicion_inversion" value="Podría realizar esta inversión, pero necesito conocer primero cómo funciona." disabled><span>Podría realizar esta inversión, pero necesito conocer primero cómo funciona.</span></label>
+        <label class="choice-option"><input type="radio" name="disposicion_inversion" value="Ahora mismo no estoy buscando realizar una inversión de este nivel." disabled><span>Ahora mismo no estoy buscando realizar una inversión de este nivel.</span></label>
+      </div>
+    </fieldset>
   </div>
   <label class="checkbox-field">
     <input type="checkbox" name="privacidad" required aria-required="true">

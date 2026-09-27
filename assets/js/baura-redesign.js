@@ -39,6 +39,42 @@
   document.querySelectorAll("[data-baura-contact-form]").forEach((form) => {
     const status = form.querySelector("[data-form-status]");
     const button = form.querySelector("button[type='submit']");
+    const service = form.querySelector("#servicio");
+    const investmentQuestion = form.querySelector("[data-investment-question]");
+    const investmentPrice = form.querySelector("[data-investment-price]");
+    const investmentOptions = investmentQuestion
+      ? Array.from(investmentQuestion.querySelectorAll("input[type='radio']"))
+      : [];
+    const prices = {
+      "BIENESTAR ACTIVO 90": "365 €/mes",
+      Nutrición: "245 €/mes",
+      Entrenamiento: "205 €/mes",
+    };
+
+    const updateInvestmentQuestion = () => {
+      const price = service ? prices[service.value] : "";
+      const shouldShow = Boolean(price && investmentQuestion);
+
+      if (investmentQuestion) {
+        investmentQuestion.hidden = !shouldShow;
+      }
+
+      if (investmentPrice) {
+        investmentPrice.textContent = price;
+      }
+
+      investmentOptions.forEach((option, index) => {
+        option.disabled = !shouldShow;
+        option.required = shouldShow && index === 0;
+
+        if (!shouldShow) {
+          option.checked = false;
+        }
+      });
+    };
+
+    service?.addEventListener("change", updateInvestmentQuestion);
+    updateInvestmentQuestion();
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -66,6 +102,7 @@
         }
 
         form.reset();
+        updateInvestmentQuestion();
         if (status) {
           status.textContent = "¡Gracias por escribirme! He recibido tu mensaje y me pondré en contacto contigo lo antes posible.";
           status.classList.add("is-visible");

@@ -6,7 +6,7 @@ import path from "node:path";
 const root = process.cwd();
 const siteUrl = "https://b-aura.es";
 const whatsappUrl =
-  "https://wa.me/34658876022?text=Hola%21%0AMe%20gustar%C3%ADa%20saber%20si%20este%20acompa%C3%B1amiento%20es%20para%20m%C3%AD";
+  "https://wa.me/34658876022?text=Hola%21%20Me%20gustar%C3%ADa%20contratar%20el%20plan%20BIENESTAR%20ACTIVO%2090";
 const photo = "/assets/images/optimized/content/mariana-presentacion.webp";
 const supportPhoto = "/assets/images/optimized/content/nutricion-entrenamiento-apoyo.jpeg";
 const logo = "/assets/images/optimized/brand/bauras_transparente-300x300.webp";
@@ -280,23 +280,12 @@ ${main}
 }
 
 function ctaChooser(id, label = "QUIERO SABER SI ES PARA MI", center = false) {
-  const optionsId = `${id}-options`;
   const note = id === "hero"
     ? '<p class="cta-note hero-plan-note"><strong>BIENESTAR ACTIVO 90</strong><span>Acompañamiento individualizado 1:1 · 90 días</span></p>'
-    : '<p class="cta-note">Puedes elegir cómo contactar conmigo.</p>';
+    : '<p class="cta-note">Completa el formulario para contarme tu situación.</p>';
   return `<div class="cta-stack${center ? " center" : ""}">
-  <button class="button button-primary" type="button" data-contact-toggle aria-expanded="false" aria-controls="${optionsId}">${label}</button>
+  <a class="button button-primary" href="/contacto/#formulario">${label}</a>
   ${note}
-  <div class="contact-options" id="${optionsId}" hidden>
-    <a class="contact-option" href="${whatsappUrl}" target="_blank" rel="noopener noreferrer">
-      ${icons.whatsapp}
-      <span><strong>Hablar por WhatsApp</strong><span>Contacto directo.</span></span>
-    </a>
-    <a class="contact-option" href="/contacto/#formulario">
-      ${icons.form}
-      <span><strong>Enviar formulario</strong><span>Escribir desde la web.</span></span>
-    </a>
-  </div>
 </div>`;
 }
 
@@ -761,10 +750,9 @@ function contactPage() {
     <section class="section">
       <div class="container contact-layout">
         <aside class="contact-card">
-          <h2>Elige cómo contactar</h2>
-          <p>Puedes hablar directamente por WhatsApp o enviar el formulario si prefieres escribir desde la web.</p>
-          <a class="button button-primary" href="${whatsappUrl}" target="_blank" rel="noopener noreferrer">HABLAR POR WHATSAPP</a>
-          <a class="button button-secondary" href="#formulario">ENVIAR FORMULARIO</a>
+          <h2>Formulario de contacto</h2>
+          <p>Completa el formulario para contarme qué quieres conseguir y qué servicio te interesa.</p>
+          <a class="button button-primary" href="#formulario">IR AL FORMULARIO</a>
           <div>
             <h3>Redes sociales</h3>
             ${socialLinks()}

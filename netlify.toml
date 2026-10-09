@@ -3,6 +3,7 @@
   publish = "."
 
 [build.environment]
+  GA_MEASUREMENT_ID = "G-C6KHGSHM5E"
   SECRETS_SCAN_OMIT_KEYS = "CONTACT_AUTOREPLY_FROM,CONTACT_REPLY_TO"
 
 [[headers]]
